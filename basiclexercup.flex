@@ -90,7 +90,7 @@ DecIntergerLiteral = 0 | -?{digitoNoCero}{digito}*
     \"                      { yybegin(YYINITIAL); }
 
 
-    [^\r\n"\\]+               { string.append(yytext()); }
+    [^\r\n"\\"]+               { string.append(yytext()); }
     \\t                    { string.append("\t"); }
     \\n                    { string.append("\n"); }
 
