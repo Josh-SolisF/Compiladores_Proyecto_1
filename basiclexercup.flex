@@ -22,10 +22,12 @@ import java_cup.runtime.* ;
     StringBuffer string = new StringBuffer();
 
     private Symbol symbol(int type) {
+        System.out.println("Token identified: " + type);
         return new Symbol(type, yyline, yycolumn);
     }
 
     private Symbol symbol(int type, Object value) {
+         System.out.println("Token identified: " + type + ", Value: " + value);
         return new Symbol(type, yyline, yycolumn, value);
     }
 %}
@@ -78,7 +80,7 @@ DecIntergerLiteral = 0 | -?{digitoNoCero}{digito}*
 
 /* Paréntesis */
 <YYINITIAL> "abreregalo" { return symbol(sym.PARENTESIS_APERTURA); }
-<YYINITIAL> "cierraregalo" { return symbol(sym.PARENTESIS_CIERRRE); }
+<YYINITIAL> "cierraregalo" { return symbol(sym.PARENTESIS_CIERRE); }
 
 /* Operadores */
 <YYINITIAL> "navidad" { return symbol(sym.SUMA); }
