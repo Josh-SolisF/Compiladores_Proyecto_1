@@ -57,48 +57,62 @@ DecIntergerLiteral = 0 | -?{digitoNoCero}{digito}*
 
 %%
 
-/* Keywords */
-<YYINITIAL> "int" { return symbol(sym.INTIGER); }
-<YYINITIAL> "string" { return symbol(sym.STRING); }
-<YYINITIAL> "char" { return symbol(sym.CHAR); }
 
-<YYINITIAL>{
-    /* Identifiers */
-    {Identifier}            { return symbol(sym.IDENTIFICADOR); }
+/* Palabras clave */
+<YYINITIAL> "abrecuento"        { return symbol(sym.ABRECUENTO); }
+<YYINITIAL> "cierracuento"      { return symbol(sym.CIERRACUENTO); }
+<YYINITIAL> "rodolfo"           { return symbol(sym.INT); }
+<YYINITIAL> "bromista"          { return symbol(sym.FLOAT); }
+<YYINITIAL> "trueno"            { return symbol(sym.BOOL); }
+<YYINITIAL> "cupido"            { return symbol(sym.CHAR); }
+<YYINITIAL> "cometa"            { return symbol(sym.STRING); }
+<YYINITIAL> "abreempaque"       { return symbol(sym.ABREEMPAQUE); }
+<YYINITIAL> "cierraempaque"     { return symbol(sym.CIERRAEMPAQUE); }
+<YYINITIAL> "entrega"           { return symbol(sym.ASIGNA); }
+<YYINITIAL> "abreregalo"        { return symbol(sym.ABREREGALO); }
+<YYINITIAL> "cierraregalo"      { return symbol(sym.CIERRAREGALO); }
+<YYINITIAL> "navidad"           { return symbol(sym.SUMA); }
+<YYINITIAL> "intercambio"       { return symbol(sym.RESTA); }
+<YYINITIAL> "reyes"             { return symbol(sym.DIVISION); }
+<YYINITIAL> "nochebuena"        { return symbol(sym.MULTIPLICACION); }
+<YYINITIAL> "magos"             { return symbol(sym.MODULO); }
+<YYINITIAL> "adviento"          { return symbol(sym.POTENCIA); }
+<YYINITIAL> "quien"             { return symbol(sym.INCREMENTO); }
+<YYINITIAL> "grinch"            { return symbol(sym.DECREMENTO); }
+<YYINITIAL> "snowball"          { return symbol(sym.MENOR); }
+<YYINITIAL> "evergreen"         { return symbol(sym.MENORIGUAL); }
+<YYINITIAL> "minstix"           { return symbol(sym.MAYOR); }
+<YYINITIAL> "upatree"           { return symbol(sym.MAYORIGUAL); }
+<YYINITIAL> "mary"              { return symbol(sym.IGUAL); }
+<YYINITIAL> "openslae"          { return symbol(sym.DIFERENTE); }
+<YYINITIAL> "melchor"           { return symbol(sym.CONJUNCION); }
+<YYINITIAL> "gaspar"            { return symbol(sym.DISYUNCION); }
+<YYINITIAL> "baltazar"          { return symbol(sym.NEGACION); }
+<YYINITIAL> "finregalo"         { return symbol(sym.FINEXP); }
+<YYINITIAL> "elfo"              { return symbol(sym.IF); }
+<YYINITIAL> "hada"              { return symbol(sym.ELSE); }
+<YYINITIAL> "envuelve"          { return symbol(sym.WHILE); }
+<YYINITIAL> "duende"            { return symbol(sym.FOR); }
+<YYINITIAL> "varios"            { return symbol(sym.SWITCH); }
+<YYINITIAL> "historia"          { return symbol(sym.CASE); }
+<YYINITIAL> "ultimo"            { return symbol(sym.DEFAULT); }
+<YYINITIAL> "corta"             { return symbol(sym.BREAK); }
+<YYINITIAL> "envia"             { return symbol(sym.RETURN); }
+<YYINITIAL> "sigue"             { return symbol(sym.DOSPUNTOS); }
+<YYINITIAL> "narra"             { return symbol(sym.PRINT); }
+<YYINITIAL> "escucha"           { return symbol(sym.READ); }
+<YYINITIAL> "_verano_"          { return symbol(sym.MAIN); }
 
-    /* Literals */
-    {DecIntergerLiteral}    { return symbol(sym.L_INTIGER); }
+/* Identificadores */
+<YYINITIAL>{Identifier}         { return symbol(sym.IDENTIFICADOR); }
 
-    \"                      {string.setLength(0); yybegin(STRING); }
+/* Literales */
+<YYINITIAL>{DecIntegerLiteral}  { return symbol(sym.LITERAL_INT); }
 
-    /* Operators */
+/* Comentarios y espacios en blanco */
+<YYINITIAL>{Comment}            { /* Ignorar comentarios */ }
+<YYINITIAL>{WhiteSpace}         { /* Ignorar espacios en blanco */ }
 
-    "="                     { return symbol(sym.ASIGNA); }
-    "=="                    { return symbol(sym.COMPARACION); }
-    "+"                     { return symbol(sym.SUMA); }
-
-    /* Comments */
-    {Comment}               { /* Ignore comments */ }
-
-    /* White space */
-    {WhiteSpace}            { /* Ignore white space */ }
-
-}
-
-<STRING>{
-
-    \"                      { yybegin(YYINITIAL); }
-
-
-    [^\r\n\"\\]+               { string.append(yytext()); }
-    \\t                    { string.append("\t"); }
-    \\n                    { string.append("\n"); }
-
-    \\r                    { string.append("\r"); }
-    \\\"                   { string.append("\""); }
-    \\                   { string.append("\\"); }
-
-}
 
 /* Error Fallback */
 //[^]                     { throw new Error("Illegal character <" + yytext() + ">"); }
